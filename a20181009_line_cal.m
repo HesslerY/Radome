@@ -25,8 +25,11 @@ xa=A(:,1);
 ya=A(:,2);
 za=A(:,3);za=0;
 
-fa=fit(xa,ya,'poly3');
-plot(fa,xa,ya)
+fa=fit(xa,ya,'poly5');
+plot(fa,xa,ya);hold on
+fa1=fit(xa,ya,'poly3');
+plot(fa1,'k')
+
 
 %------------------------------------------%
 
