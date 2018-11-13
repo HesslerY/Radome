@@ -6,8 +6,11 @@ close all
 feature('DefaultCharacterSet','UTF-8');
 
 Farest=-1200;       %   远处的射线
-scan_theta=10;      %   天线扫描角度
-d_down=100;         %   下边沿厚度
+scan_theta=10;      %   天线扫描角度--与水平轴夹角
+
+b_step=5;           %   线簇疏密程度
+
+d_down=60;         %   下边沿厚度
 d_up=-30;           %   上沿厚度
 
 %%  数据拟合
@@ -66,10 +69,9 @@ x=-1200:0;
 
 %   绘制阵列所在位置
 array_k=tand(110);
-array_x_start=-200;
+array_x_start=-150;
 array_x_stop=-100;
-array_x=array_x_start:10:array_x_stop;
-
+array_x=array_x_start:20:array_x_stop;
 array_b=52.83-array_k*mean(array_x);
 
 array_y=array_k*array_x+array_b;
@@ -106,7 +108,8 @@ sl11=solve(fa2.p1*x^3+fa2.p2*x^2+fa2.p3*x+fa2.p4-k1*x-b1==0);
 Xr1(b1) = vpa(sl11(1)); Xr2(b1) = vpa(sl11(2));Xr3(b1) = vpa(sl11(3));
 
 X = @(b1) [Xr1(b1)];
-b1=b1down:20:b1up;   b1=b1';
+b1=b1down:b_step:b1up;  % 步长决定密度
+b1=b1';
 
 %   X1,Y1 为焦点坐标
 X1=double(X(b1));
@@ -125,7 +128,7 @@ k1_out1_theta=asind(sind(k1_in_epsilon)/sqrt(3.2));%     入射介质出射角
 syms x b1
 sl00=solve(k1*x+b1-array_k*x-array_b==0);
 Xr0(b1)=vpa(sl00(1));
-b1=b1down:20:b1up;   b1=b1';
+b1=b1down:b_step:b1up;   b1=b1';
 X0=double(Xr0(b1));Y0=array_k*X0+array_b;
 for n=1:length(X1)  %绘制阵列出射
     plot([X1(n),X0(n)],[Y1(n),Y0(n)],'r');hold on
