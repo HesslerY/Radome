@@ -1,4 +1,5 @@
-%  移动了结构的空间位置，利于计算
+%   移动了结构的空间位置，利于计算
+%   计算下半部分
 
 clear
 close all
@@ -179,4 +180,5 @@ end
 hold on
 title(['扫描角度是-',num2str(scan_theta),'\circ'])
 legend off
+scan_theta
 kout_theta

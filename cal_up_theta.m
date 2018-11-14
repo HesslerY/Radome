@@ -1,17 +1,24 @@
-%   移动了结构的空间位置，利于计算
-%   计算上半部分
-clear
-close all
+function [outputArg1,outputArg2] = cal_up_theta(scan_theta,Farest,b_step,d_down,d_up,FlagDraw)
+%
+%   用来计算单纯脱壳时候的折射率变化情况
+%   单位均为mm，角度为degree
+%   scan_theta为扫描的角度
+%   farest为远处射线最远的尺度
+%   b_step光线线簇的疏密程度
+%   d_down 下边沿抬高的厚度，输入正值
+%   d_up为  上边沿抬高的厚度，输入正值
+%   FlagDraw 标志位，1就是绘图，0就是不绘图
+%   eg. cal_up_theta(-10,1200,5,60,60,1)
+%   Author:CS.Chen First piblished in 2018.11.14
 
 feature('DefaultCharacterSet','UTF-8');
 
-Farest=-2200;       %   远处的射线
-scan_theta=-10;      %   天线扫描角度
-b_step=5;           %   光线簇疏密程度
-d_down=60;         %   下边沿厚度
-d_up=-30;           %   上沿厚度
-
-
+Farest=-Farest;       %   远处的射线
+scan_theta=scan_theta;      %   天线扫描角度
+b_step=b_step;           %   光线簇疏密程度
+d_down=d_down;         %   下边沿厚度
+d_up=-d_up;           %   上沿厚度
+FlagDraw=FlagDraw;
 
 %%  数据拟合
 %   轮廓下线拟合
@@ -48,9 +55,6 @@ B=[
 xb=B(:,1);yb=B(:,2);zb=B(:,3);zb=0;
 fb=fit(xb,yb,'poly2');
 
-% plot(fb,xb,yb);hold on
-
-
 %内轮廓
 fa2=fa;
 fa2.p4=fa2.p4+d_down;
@@ -60,11 +64,12 @@ fb2.p3=fb2.p3+d_up;
 
 %%  绘图
 %   上下轮廓，及内部
-plot(fa,'b');hold on;
-plot(fb,'b');hold on;
-plot(fa2,'g');hold on;
-plot(fb2,'g');hold on;
-
+if FlagDraw==1
+    plot(fa,'b');hold on;
+    plot(fb,'b');hold on;
+    plot(fa2,'g');hold on;
+    plot(fb2,'g');hold on;
+end
 x=-1200:0;
 
 %   绘制阵列所在位置
@@ -78,7 +83,10 @@ array_y=array_k*array_x+array_b;
 array_y_start=max(array_y);
 array_y_stop=min(array_y);
 %   绘制阵列
-plot(array_x, array_y,'linewidth',2,'color',[.5 .5 .5]);hold on
+
+if FlagDraw==1
+    plot(array_x, array_y,'linewidth',2,'color',[.5 .5 .5]);hold on
+end
 ArrayLong=sqrt(   (array_x_start-array_x_stop)^2+(array_y_start-array_y_stop)^2);
 
 %k1俯角30，对应50d，k2垂直出射对应20d，k3仰角10对应170d
@@ -86,27 +94,26 @@ ArrayLong=sqrt(   (array_x_start-array_x_stop)^2+(array_y_start-array_y_stop)^2)
 k1=tand(scan_theta);
 L=length(array_x);  %   绘制出射波能用到
 
-out_flag=1;
 
-%% k1
+%%  k
 
-if out_flag==1 || out_flag==666
-    %k1
-    x1=-1200:10:-100;
-    
-    b1up=array_y(1)-k1*array_x(1);
-    b1down=array_y(L)-k1*array_x(L);
-    y1up=k1*x1+b1up;
-    y1down=k1*x1+b1down;
-    %   目标出射光路
+x1=-1200:10:-100;
+
+b1up=array_y(1)-k1*array_x(1);
+b1down=array_y(L)-k1*array_x(L);
+y1up=k1*x1+b1up;
+y1down=k1*x1+b1down;
+%   目标出射光路，理想
+
+if FlagDraw==1
     plot(x1,y1up,x1,y1down,'linewidth',2,'color',[.5 .5 .5]);hold on
-    
 end
+
 
 syms x b1
 %   求交点
 sl11=solve(fb2.p1*x^2+fb2.p2*x+fb2.p3-k1*x-b1==0);
-Xr1(b1) = vpa(sl11(1)); 
+Xr1(b1) = vpa(sl11(1));
 
 X = @(b1) [Xr1(b1)];
 b1=b1down:b_step:b1up;  % 步长决定密度
@@ -130,9 +137,14 @@ sl00=solve(k1*x+b1-array_k*x-array_b==0);
 Xr0(b1)=vpa(sl00(1));
 b1=b1down:b_step:b1up;   b1=b1';
 X0=double(Xr0(b1));Y0=array_k*X0+array_b;
-for n=1:length(X1)  %绘制阵列出射
-    plot([X1(n),X0(n)],[Y1(n),Y0(n)],'r');hold on
+
+
+if FlagDraw==1
+    for n=1:length(X1)  %绘制阵列出射
+        plot([X1(n),X0(n)],[Y1(n),Y0(n)],'r');hold on
+    end
 end
+
 
 %%   在介质之中的传播
 k12_theta=k1_x1_theta+k1_out1_theta;%   第一次入介质,出射角度与水平夹角
@@ -147,9 +159,15 @@ b12=Y1-k12.*X1;
 X2=double( Xr21(b12,k12));Y2=fb(X2);
 
 %   绘制介质内光路
-for n=1:length(X1)
-    plot([X1(n),X2(n)],[Y1(n),Y2(n)],'k');hold on
+
+if FlagDraw==1
+    
+    for n=1:length(X1)
+        plot([X1(n),X2(n)],[Y1(n),Y2(n)],'k');hold on
+    end
+    
 end
+
 %%  出射介质
 
 syms x
@@ -171,15 +189,22 @@ b22=Y2-kout.*X2;
 X3=ones(length(X1),1)*Farest;
 Y3=kout.*X3+b22;
 %   绘制出射光路
-for n=1:length(X1)
-    plot([X2(n),X3(n)],[Y2(n),Y3(n)],'r');hold on
+if FlagDraw==1
+    
+    for n=1:length(X1)
+        plot([X2(n),X3(n)],[Y2(n),Y3(n)],'r');hold on
+    end
+    hold on
+    title(['扫描角度是-',num2str(scan_theta),'\circ'])
+    legend off
 end
-% k_out_theta
-hold on
-title(['扫描角度是-',num2str(scan_theta),'\circ'])
-legend off
+
+
+
 scan_theta
 -180+kout_theta
+mean_chang_theta=mean(-180+kout_theta)-scan_theta
+clear all
 
-
+end
 
