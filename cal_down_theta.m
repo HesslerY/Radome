@@ -74,7 +74,8 @@ if FlagDraw==1
     plot(fa2,'g');hold on;
     plot(fb2,'g');hold on;
 end
-x=-1200:0;
+% change
+x=Farest:0;
 
 %   绘制阵列所在位置
 array_k=tand(110);
@@ -105,7 +106,8 @@ out_flag=1;
 
 if out_flag==1 || out_flag==666
     %k1
-    x1=-1200:10:-100;
+    % change
+    x1=Farest:10:-100;
     
     b1up=array_y(1)-k1*array_x(1);
     b1down=array_y(L)-k1*array_x(L);
@@ -201,12 +203,12 @@ if FlagDraw==1
     end
     % k_out_theta
     hold on
-    title(['扫描角度是-',num2str(scan_theta),'\circ'])
+%     title(['扫描角度是-',num2str(scan_theta),'\circ'])
     legend off
     
 end
-scan_theta
-kout_theta
+scan_theta-max(kout_theta)
+scan_theta-min(kout_theta)
 mean_change_theta=mean(kout_theta)-scan_theta
 
 

@@ -1,13 +1,13 @@
 %   移动了结构的空间位置，利于计算
 %   计算下半部分
-
+%   看55行
 clear
 close all
 
 feature('DefaultCharacterSet','UTF-8');
 
-scan_theta=10;      %   天线扫描角度--与水平轴夹角
-Farest=-1200;       %   远处的射线
+scan_theta=5;      %   天线扫描角度--与水平轴夹角
+Farest=-3600;       %   远处的射线
 b_step=5;           %   线簇疏密程度
 d_down=30;         %   下边沿厚度
 d_up=-30;           %   上沿厚度
@@ -52,7 +52,16 @@ fb=fit(xb,yb,'poly2');
 
 %内轮廓
 fa2=fa;
+%------------------------
+%   对fa2做改变
+%------------------------
+fa2.p1=-1.679e-07;
+% fa2.p2=-0.000425
 fa2.p4=fa2.p4+d_down;
+%------------------------
+
+
+
 
 fb2=fb;
 fb2.p3=fb2.p3+d_up;
@@ -67,7 +76,7 @@ plot(fb2,'g');hold on;
 % plot(fa,xa,ya);hold on;
 % plot(fb,xb,yb);hold on;
 
-x=-1200:0;
+x=Farest:0;
 
 %   绘制阵列所在位置
 array_k=tand(110);
@@ -93,7 +102,7 @@ out_flag=1;
 
 if out_flag==1 || out_flag==666
     %k1
-    x1=-1200:10:-100;
+    x1=Farest:10:-100;
     
     b1up=array_y(1)-k1*array_x(1);
     b1down=array_y(L)-k1*array_x(L);
@@ -182,4 +191,5 @@ hold on
 title(['扫描角度是-',num2str(scan_theta),'\circ'])
 legend off
 scan_theta
-kout_theta
+mean(abs(kout_theta-scan_theta))
+
