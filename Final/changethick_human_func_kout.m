@@ -1,4 +1,4 @@
-function [scan_thetac]=changethick_human_func(fa2_pp,scan_theta)
+function [kout_theta]=changethick_human_func_kout(fa2_pp,scan_theta)
 %   Be careful！If you can't see chinese 
 %   please run   
 %   feature('DefaultCharacterSet','UTF-8');
@@ -297,6 +297,7 @@ if FlagDraw==1
 %     
 end
 
+kout_theta=mean(kout_theta);
+
 
 end
-

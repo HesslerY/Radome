@@ -2,22 +2,28 @@
 clear
 close all
 warning('off')
+feature('DefaultCharacterSet','UTF-8');
 %--------------------------------------------------%
 %--------------------------------------------------%
 
-theta=[3 4 5 10 ];
+theta=0:50;
 
 
-% for d=1:length(theta)
-    changethick_up_human_func()
-    %     figure
-    %     kk=[1.678 4.27 5.983];% k脱壳
-    %     changethick_human_func(kk,theta(d));
-    figure
-    kk=[1.974 4.871 6.338];% k优化
-    changethick_human_func(kk,theta(d));
+for d=1:length(theta)
     
-% end
+%     figure
+    kk=[1.678 4.27 5.983];% k脱壳
+    thetachange_no_opt(d)=changethick_human_func(kk,theta(d));
+%     saveas(gcf,['E:\Matlab\Radome\Final\figure\no_opt\',num2str(theta(d)),'_no_opt','.png'])
+    
+    
+%     figure
+    kk=[1.974 4.871 6.338];% k优化
+    thetachange__opt(d)=changethick_human_func(kk,theta(d));
+%     saveas(gcf,['E:\Matlab\Radome\Final\figure\opt\',num2str(theta(d)),'_opt','.png'])
+   
+    
+end
 %%  注释，曲线，备注
 %   cst 曲线 -0.1678*(0.01*t)^3-0.000427*t^2-0.5983*t-337.2
 
