@@ -297,7 +297,7 @@ if FlagDraw==1
 %     
 end
 
-kout_theta=mean(kout_theta);
+kout_theta=mean(kout_theta)-scan_theta;
 
 
 end
