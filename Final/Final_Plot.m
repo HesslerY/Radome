@@ -6,18 +6,20 @@ feature('DefaultCharacterSet','UTF-8');
 %--------------------------------------------------%
 %--------------------------------------------------%
 
-theta=0:50;
-
+theta=20;
+% theta=50对应扫描角度-30；
+% theta=20对应扫描角度0；
+% theta=10对应扫描角度10；
 
 for d=1:length(theta)
     
-%     figure
+    figure
     kk=[1.678 4.27 5.983];% k脱壳
     thetachange_no_opt(d)=changethick_human_func(kk,theta(d));
 %     saveas(gcf,['E:\Matlab\Radome\Final\figure\no_opt\',num2str(theta(d)),'_no_opt','.png'])
     
     
-%     figure
+    figure
     kk=[1.974 4.871 6.338];% k优化
     thetachange__opt(d)=changethick_human_func(kk,theta(d));
 %     saveas(gcf,['E:\Matlab\Radome\Final\figure\opt\',num2str(theta(d)),'_opt','.png'])

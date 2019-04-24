@@ -1,10 +1,10 @@
-function [scan_thetac]=func15_ForOpt(fa2p1,fa2p2,fa2p3,fa2p4,scan_theta)
+function [scan_thetac]=FuncBase_35(fa2p1,fa2p2,fa2p3,fa2p4,scan_theta)
 
 %   Be careful！If you can't see chinese
 %   please run
 %   feature('DefaultCharacterSet','UTF-8');
 
-%   用来计算侧面的（方位角），scan_theta取值-29~19；
+%   用来计算侧面的（方位角），scan_theta取值-30~19；
 %   30°做了特殊的处理，，为了画图~
 
 
@@ -35,13 +35,13 @@ FlagDraw=1;         %  1是画，2是不画
 %%  数据拟合
 %   轮廓下线拟合
 A=[
-    2.99E+02	3.15E+00	7.92E+01
-    2.83E+02	1.68E+02	7.92E+01
-    1.55E+02	6.01E+02	7.92E+01
-    8.92E+01	6.15E+02	7.92E+01
-    2.78E+01	5.73E+02	7.92E+01
-    -2.07E+02	1.68E+02	7.92E+01
-    -2.98E+02	3.15E+00	7.92E+01
+-2.98E+02	3.15E+00	8.87E-12
+-1.90E+02	1.98E+02	8.87E-12
+-5.17E+00	3.82E+02	8.98E-12
+8.60E+01	4.00E+02	8.98E-12
+1.76E+02	3.72E+02	8.98E-12
+2.68E+02	1.98E+02	8.98E-12
+2.98E+02	3.15E+00	1.14E-13
     ];
 
 xa=A(:,1);ya=A(:,2);za=A(:,3);za=0;
@@ -230,7 +230,7 @@ if FlagDraw==1
     
     title(['扫描角度是',num2str(scan_theta),'\circ'])
     legend off
-    view(-90,90)
+%     view(-90,90)
     
 end
 

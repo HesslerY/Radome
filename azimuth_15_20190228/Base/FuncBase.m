@@ -1,4 +1,4 @@
-function [scan_thetac]=func25_ForOpt(fa2p1,fa2p2,fa2p3,fa2p4,scan_theta)
+function [scan_thetac]=FuncBase(fa2p1,fa2p2,fa2p3,fa2p4,scan_theta)
 
 %   Be careful！If you can't see chinese
 %   please run
@@ -34,15 +34,20 @@ FlagDraw=1;         %  1是画，2是不画
 
 %%  数据拟合
 %   轮廓下线拟合
+%   A矩阵中，
 A=[
-    2.98E+02	3.15E+00	9.29E-14
-    2.77E+02	1.79E+02	4.73E-12
-    1.68E+02	4.55E+02	4.81E-12
-    8.71E+01	4.77E+02	4.78E-12
-    8.57E+00	4.47E+02	4.73E-12
-    -2.02E+02	1.79E+02	4.70E-12
-    -2.98E+02	3.15E+00	4.57E-12
+    2.99E+02	3.15E+00	7.92E+01
+    2.83E+02	1.68E+02	7.92E+01
+    1.55E+02	6.01E+02	7.92E+01
+    8.92E+01	6.15E+02	7.92E+01
+    2.78E+01	5.73E+02	7.92E+01
+    -2.07E+02	1.68E+02	7.92E+01
+    -2.98E+02	3.15E+00	7.92E+01
     ];
+
+
+
+
 
 xa=A(:,1);ya=A(:,2);za=A(:,3);za=0;
 fa=fit(xa,ya,'poly4');

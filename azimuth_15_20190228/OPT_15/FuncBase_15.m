@@ -1,10 +1,10 @@
-function [scan_thetac]=func35_ForOpt(fa2p1,fa2p2,fa2p3,fa2p4,scan_theta)
+function [scan_thetac]=FuncBase_15(fa2p1,fa2p2,fa2p3,fa2p4,scan_theta)
 
 %   Be careful！If you can't see chinese
 %   please run
 %   feature('DefaultCharacterSet','UTF-8');
 
-%   用来计算侧面的（方位角），scan_theta取值-30~19；
+%   用来计算侧面的（方位角），scan_theta取值-29~19；
 %   30°做了特殊的处理，，为了画图~
 
 
@@ -29,7 +29,7 @@ Farest=900;       %   远处的射线
 % b_step=15;           %   光线簇疏密程度
 bnum=15;              % 光线个数
 d_down=40;         %   下边沿厚度
-FlagDraw=0;         %  1是画，2是不画
+FlagDraw=1;         %  1是画，2是不画
 
 
 %%  数据拟合

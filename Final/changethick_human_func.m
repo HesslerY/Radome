@@ -26,12 +26,12 @@ warning('off')
 feature('DefaultCharacterSet','UTF-8');
 % scan_theta=scan_theta;
 scan_theta=scan_theta;
-Farest=-1500;       %   远处的射线
+Farest=-10000;       %   远处的射线
 %   天线扫描角度
 b_step=15;           %   光线簇疏密程度
 d_down=30;         %   下边沿厚度
 d_up=-30;           %   上沿厚度
-FlagDraw=2;         %  1是画，2是不画    
+FlagDraw=1;         %  1是画，2是不画    
 neibijiaodian=-1080;
 
 
